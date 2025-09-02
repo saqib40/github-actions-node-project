@@ -18,6 +18,6 @@ jobs:
 
       - name: Useless step but phir bii
         run: echo "Installing Node.js dependencies (there aren\'t any)..."
-        
+
       - name: "Running application tests"
-        run: sh 'node index.test.js'
+        run: node index.test.js
