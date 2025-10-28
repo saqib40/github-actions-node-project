@@ -1,0 +1,40 @@
+name: 02 - Manual Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      # A dropdown menu for the environment
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        type: choice
+        options:
+        - staging
+        - production
+        default: 'staging'
+      # A checkbox for migrations
+      run_migrations:
+        description: 'Run database migrations?'
+        required: true
+        type: boolean
+        default: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Environment
+        # You access inputs using the 'github.event.inputs' context
+        run: |
+          echo "🚀 Deploying to: ${{ github.event.inputs.environment }}"
+      
+      - name: Run Migrations
+        # Use an 'if' condition to check the boolean input
+        if: github.event.inputs.run_migrations == true
+        run: |
+          echo "👟 Running database migrations..."
+          # Your migration command would go here
+          echo "Migrations complete."
